@@ -4,8 +4,4 @@ class WelcomeController < ApplicationController
 
   def about
   end
-  
-  def welcome
-  end
-  
 end
