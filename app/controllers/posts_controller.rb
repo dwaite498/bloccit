@@ -34,18 +34,31 @@ class PostsController < ApplicationController
   def edit
     @post = Post.find(params[:id])
   end
-end
 
-def update
-  @post = post.find(params[:id])
-  @post.title = params[:post][:title]
-  @post.body = params[:post][:body]
+
+  def update
+    @post = Post.find(params[:id])
+    @post.title = params[:post][:title]
+    @post.body = params[:post][:body]
+    
+    if @post.save
+      flash[:notice] = "Post was updated."
+      redirect_to @post
+    else
+      flash.now[:alert] = "There was an issue saving your post. Please try again."
+      render :edit
+    end
+  end
   
-  if @post.save
-    flash[:notice] = "Post was saved."
-    redirect_to @post
-  else
-    flash.now[:alert] = "There was an issue saving your post. Please try again."
-    render :edit
+  def destroy
+    @post = Post.find(params[:id])
+    
+    if @post.destroy
+      flash[:notice] = "\"#{@post.title}\" was deleted successfully"
+      redirect_to posts_path
+    else
+      flash.now[:error] = "The delete action did not work."
+      render :show
+    end
   end
 end
