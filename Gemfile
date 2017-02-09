@@ -16,6 +16,7 @@
  end
  
  group :development, :test do
+  gem 'shoulda'
   gem 'rspec-rails', '~> 3.0'
  end
  
