@@ -1,12 +1,6 @@
 require 'random_data'
 
-10.times do
-  SponsoredPost.create!(
-    title: RandomData.random_sentence,
-    body: RandomData.random_paragraph,
-    price: 8675309
-  )
-end
+puts "Beginning of file"
 
 15.times do
   Topic.create!(
@@ -14,6 +8,7 @@ end
     description: RandomData.random_paragraph
     )
 end
+
 
 50.times do
   Post.create!(
@@ -29,6 +24,15 @@ posts = Post.all
    post: posts.sample,
    body: RandomData.random_paragraph
    )
+end
+
+10.times do
+  SponsoredPost.create!(
+    topic: topics.sample,
+    title: RandomData.random_sentence,
+    body: RandomData.random_paragraph,
+    price: 8675309
+  )
 end
 
 puts "seed finished"
