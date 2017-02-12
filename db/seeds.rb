@@ -8,6 +8,7 @@ puts "Beginning of file"
     description: RandomData.random_paragraph
     )
 end
+topics = Topic.all
 
 
 50.times do
