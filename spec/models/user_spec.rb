@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { User.create!(name: "Doom Hammer", email: "DHammer@bloccit.com", password: "password") }
+  let(:user) { User.create!(name: "doom hammer", email: "DHammer@bloccit.com", password: "password") }
   
   #test for presence of and valid length of name
   it { is_expected.to validate_presence_of(:name) }

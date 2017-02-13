@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   before_save { self.email = email.downcase if email.present? }
+  before_save :check_name
   
   validates :name, length: { minimum: 1, maximum: 100 }, presence: true
 
@@ -13,4 +14,14 @@ class User < ActiveRecord::Base
 
 
   has_secure_password
+  
+  def check_name
+    if name
+      name_array = []
+      name.split.each do |name|
+        name_array << name.capitalize
+      end
+      self.name = name_array.join(' ')
+    end
+  end
 end
