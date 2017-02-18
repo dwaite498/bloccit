@@ -34,6 +34,12 @@ posts = Post.all
        )
 end
 
+user = User.first
+user.update_attributes!(
+  email: 'dwaite498@gmail.com',
+  password: 'hunter231'
+)
+
 puts "seed finished"
 puts "#{User.count} users created"
 puts "#{Topic.count} topics created"
