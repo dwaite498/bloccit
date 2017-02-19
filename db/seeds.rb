@@ -37,7 +37,7 @@ end
   admin = User.create!(
     name: "admin user",
     email: "admin@bloccit.com",
-    password: "admin",
+    password: "password",
     role: "admin"
     )
   
@@ -45,6 +45,13 @@ end
     name: "member user",
     email: "member@bloccit.com",
     password: "password"
+    )
+    
+  moderator = User.create!(
+    name: "moderator",
+    email: "moderator@bloccit.com",
+    password: "password",
+    role: "moderator"
     )
 
 puts "seed finished"
