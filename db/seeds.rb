@@ -7,7 +7,7 @@ require 'random_data'
     password: RandomData.random_sentence
     )
   end
-  users = User.all
+users = User.all
 
 15.times do
    Topic.create!(
@@ -19,7 +19,7 @@ topics = Topic.all
 
 50.times do
     Post.create!(
-      user: users.sample,
+        user: users.sample,
         topic: topics.sample,
         title: RandomData.random_sentence,
         body: RandomData.random_paragraph
@@ -29,16 +29,31 @@ posts = Post.all
     
 100.times do
    Comment.create!(
-       post: posts.sample,
-       body: RandomData.random_paragraph
-       )
+      user: users.sample,
+      post: posts.sample,
+      body: RandomData.random_paragraph
+      )
 end
 
-user = User.first
-user.update_attributes!(
-  email: 'dwaite498@gmail.com',
-  password: 'hunter231'
-)
+  admin = User.create!(
+    name: "admin user",
+    email: "admin@bloccit.com",
+    password: "password",
+    role: "admin"
+    )
+  
+  member = User.create!(
+    name: "member user",
+    email: "member@bloccit.com",
+    password: "password"
+    )
+    
+  moderator = User.create!(
+    name: "moderator",
+    email: "moderator@bloccit.com",
+    password: "password",
+    role: "moderator"
+    )
 
 puts "seed finished"
 puts "#{User.count} users created"
