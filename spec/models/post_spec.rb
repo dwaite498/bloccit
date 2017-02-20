@@ -1,13 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  let(:title) { RandomData.random_sentence }
-  let(:body) { RandomData.random_paragraph }
-  let(:topic) { Topic.create!(name: name, description: description) }
+  let(:topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
   let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
-  let(:post) { topic.posts.create!(title: title, body: body) }
+  let(:post) { topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user) }
   
   it { is_expected.to have_many(:comments) }
+  it { is_expected.to have_many(:votes) }
   
   it { is_expected.to belong_to(:topic) }
   
@@ -18,9 +17,40 @@ RSpec.describe Post, type: :model do
   it { is_expected.to validate_length_of(:title).is_at_least(5) }
   it { is_expected.to validate_length_of(:body).is_at_least(20) }
    
-  describe "attributes" do
-    it "has title and body attributes" do
-      expect(post).to have_attributes(title: title, body: body)
+   describe "attributes" do
+     it "should respond to title" do
+       expect(post).to respond_to(:title)
+     end
+
+     it "should respond to body" do
+       expect(post).to respond_to(:body)
     end
   end
+  
+  describe "voting" do
+    before do
+      3.times { post.votes.create!(value: 1) }
+      2.times { post.votes.create!(value: -1) }
+      @up_votes = post.votes.where(value: 1).count
+      @down_votes = post.votes.where(value: -1).count
+    end
+  
+  describe "up votes" do
+    it "counts the number of votes with value = 1" do
+      expect( post.up_votes ).to eq(@up_votes)
+    end
+  end
+  
+  describe "down votes" do
+    it "counts the number of votes with a value = -1" do
+      expect( post.down_votes).to eq(@down_votes)
+    end
+  end
+  
+  describe "points" do
+    it "returns the sum of all down and up votes" do
+      expect( post.points ).to eq(@up_votes - @down_votes)
+    end
+  end
+end
 end
