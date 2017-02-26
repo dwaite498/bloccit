@@ -6,6 +6,7 @@ class Post < ActiveRecord::Base
     has_many :votes, dependent: :destroy
     has_many :favorites, dependent: :destroy
     after_create :create_vote
+    after_create :create_favorite
     
     validates :title, length: { minimum: 5 }, presence: true
     validates :body, length: { minimum: 20 }, presence: true
@@ -34,5 +35,10 @@ class Post < ActiveRecord::Base
     
     def create_vote
       user.votes.create(value: 1, post: self )
+    end
+    
+    def create_favorite
+        Favorite.create(post: self, user: serlf.user)
+        FavoriteMailer.new_post(self).deliver_now
     end
 end
