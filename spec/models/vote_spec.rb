@@ -1,9 +1,9 @@
 require 'rails_helper'
 include
 RSpec.describe Vote, type: :model do
-  let(:topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
-  let(:user) { User.create!(name: "Bloccit User", email: "user@bloccit.com", password: "helloworld") }
-  let(:post) { topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph, user: user) }
+  let(:topic) { topic.create(:topic) }
+  let(:user) { user.create(:user) }
+  let(:post) { post.create(:post) }
   let(:vote) { Vote.create!(value: 1, post: post, user: user) }
   
   
@@ -15,7 +15,7 @@ RSpec.describe Vote, type: :model do
   
   describe "update_post callback" do
     it "triggers update_post on save" do
-      expect(vote).to receive(:update_post).at_least(:once)
+      expect(post).to receive(:update_post).at_least(:once)
       vote.save!
     end
     
