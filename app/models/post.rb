@@ -1,5 +1,6 @@
 class Post < ActiveRecord::Base
     default_scope { order('rank DESC') }
+     scope :visible_to, -> (user) { user ? all : joins(:topic).where('topics.public' => true) }
     belongs_to :topic
     belongs_to :user
     has_many :comments, dependent: :destroy
