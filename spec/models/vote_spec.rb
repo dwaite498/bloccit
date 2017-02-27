@@ -1,10 +1,10 @@
 require 'rails_helper'
 include
 RSpec.describe Vote, type: :model do
-  let(:topic) { topic.create(:topic) }
-  let(:user) { user.create(:user) }
-  let(:post) { post.create(:post) }
-  let(:vote) { Vote.create!(value: 1, post: post, user: user) }
+  let(:topic) { create(:topic) }
+  let(:user) { create(:user) }
+  let(:post) { create(:post) }
+  let(:vote) { create(:vote, post: post, user: user) }
   
   
   it { is_expected.to belong_to(:post) }
@@ -15,7 +15,7 @@ RSpec.describe Vote, type: :model do
   
   describe "update_post callback" do
     it "triggers update_post on save" do
-      expect(post).to receive(:update_post).at_least(:once)
+      expect(vote).to receive(:update_post).at_least(:once)
       vote.save!
     end
     
