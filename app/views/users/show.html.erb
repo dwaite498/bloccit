@@ -18,8 +18,22 @@
   </div>
 </div>
 
-<h2>Posts</h2>
-<%= render @user.posts %>
+<% if user_has_posts? %>
+  <h2>Posts</h2>
+  <%= render @user.posts %>
+<% else %>
+  <h2>{user.name} has no posts</h2>
+<% end %>
 
-<h2>Comments</h2>
-<%= render @user.comments %>
+<% if user_has_comments? %>
+  <h2>Comments</h2>
+  <%= render @user.comments %>
+<% else %>
+ <h2>{User} has no comments</h2>
+<% end %>
+
+
+    <% @user.favorites.each do |post| %>
+      <%= post %>
+      <%= post %>
+    <% end %>
