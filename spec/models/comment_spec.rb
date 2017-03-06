@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  let(:topic) { Topic.create!(name: RandomData.random_sentence, description: RandomData.random_paragraph) }
-  let(:post) { topic.posts.create!(title: RandomData.random_sentence, body: RandomData.random_paragraph) }
-  let(:comment) {Comment.create!(body: "comment body", post: post, user: user) }
+  let(:topic) { create(:topic) }
+  let(:user) { create(:user) }
+  let(:post) { create(:post) }
+  let(:comment) { create(:comment,post: post, user: user) }
   
     it{ is_expected.to belong_to(:post) }
     it{ is_expected.to belong_to(:user) }
@@ -13,7 +14,7 @@ RSpec.describe Comment, type: :model do
   
   describe "attributes" do
       it "Has a body attribute" do
-          expect(comment).to have_attributes(body: "comment body")
+          expect(comment).to have_attributes(body: comment.body)
       end
   end
   
